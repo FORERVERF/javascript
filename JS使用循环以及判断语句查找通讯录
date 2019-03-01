@@ -1,0 +1,77 @@
+var contacts = [
+{
+"firstName": "Akira",
+"lastName": "Laine",
+"number": "0543236543",
+"likes": ["Pizza", "Coding", "Brownie Points"]
+},
+{
+"firstName": "Harry",
+"lastName": "Potter",
+"number": "0994372684",
+"likes": ["Hogwarts", "Magic", "Hagrid"]
+},
+{
+"firstName": "Sherlock",
+"lastName": "Holmes",
+"number": "0487345643",
+"likes": ["Intriguing Cases", "Violin"]
+},
+{
+"firstName": "Kristian",
+"lastName": "Vos",
+"number": "unknown",
+"likes": ["Javascript", "Gaming", "Foxes"]
+}
+];
+
+法一：基础暴力方法，不用借助hasOwnProperty函数
+
+function lookUpProfile(firstName, prop)
+{
+for(var i=0;i<contacts.length;i++)
+{
+if((firstName===contacts[i]["firstName"])&&(prop==="lastName"||prop==="number"||prop==="likes"))
+    {
+        return contacts[i][prop]; break;
+    }
+ else if((firstName===contacts[i]["firstName"])&&(prop!=="lastName"||prop!=="number"||prop!=="likes"))
+    {
+        return "No such property"; break;
+    }
+}
+if(firstName!==contacts[0]["firstName"]&&firstName!=contacts[1]["firstName"]&&firstName!==contacts[2]["firstName"]&&firstName!==contacts[3]["firstName"])
+{
+    return "No such contact";
+}
+}
+lookUpProfile("Kristian","lastName");
+法二：利用hasOwnProperty函数，简单优美一些。
+
+function lookUpProfile(firstName, prop)
+{
+var j=0;//记录次数（次数最大值为数组contacts的长度）
+for(var i=0;i<contacts.length;i++)
+{
+    if(firstName===contacts[i]["firstName"])
+    {
+        if(contacts[i].hasOwnProperty(prop))
+        {
+            return contacts[i][prop]; break;
+        }
+        else 
+        {
+             return "No such property"; break;
+        }
+    }
+    else
+    {
+     j++;
+     if(j==4)
+     {
+      return "No such contact";
+     }
+   }
+ }
+}
+lookUpProfile("Kristian","lastName");
